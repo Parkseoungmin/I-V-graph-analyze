@@ -47,7 +47,7 @@ for i in csv_tqdm:
     plt.title('I-V graph_linear')
     plt.xlabel('Voltage [V]',labelpad=10)
     plt.ylabel('Current [A]',labelpad=10)
-
+    plt.grid(True)
 
     plt.subplot(122)
     plt.plot(Voltage,Current_abs,"g-",Voltage_2,Current_abs_2,'c>')
@@ -55,9 +55,11 @@ for i in csv_tqdm:
     plt.title('I-V graph_abs')
     plt.xlabel('Voltage [V]',labelpad=10)
     plt.ylabel('Current [A]',labelpad=10)
-
+    plt.grid(True)
 
     plt.savefig('.\\res\\%s.png'%filename)
-    plt.show()
+    plt.show(block=False)
+    plt.pause(1)
+    plt.close()
 
 
