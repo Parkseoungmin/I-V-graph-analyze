@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import glob
 from tqdm import tqdm
 
-def option(A,B):
+def oneplot(A,B):
     file_path = '.\dat\*.csv'
     csv = []
     for filename in glob.glob(file_path,recursive=True):
@@ -12,7 +12,8 @@ def option(A,B):
     csv_tqdm = tqdm(csv)
     for i in csv_tqdm:
         filename = i.split('\\')[-1][:-4]
-        csv_tqdm.set_description(f'Processing {filename}')
+        filename_1 = i.split('\\')[-1][:-4].split('_')[1]
+        csv_tqdm.set_description(f'Processing {filename_1}')
 
         Data = pd.read_csv(".\dat\%s"%filename+'.csv',names=['Value','Voltage','Current','four','five','six'])
 
@@ -44,22 +45,26 @@ def option(A,B):
         plt.figure(figsize=(15,7))
 
         plt.subplot(121)
-        plt.plot(Voltage,Current_lin,Voltage_2,Current_lin_2, "b>")
+        plt.plot(Voltage,Current_lin,label='%s'%filename_1)
+        plt.plot(Voltage_2,Current_lin_2, "b>")
         plt.title('I-V graph_linear')
         plt.xlabel('Voltage [V]',labelpad=10)
         plt.ylabel('Current [A]',labelpad=10)
+        plt.legend()
         plt.grid(True)
 
         plt.subplot(122)
-        plt.plot(Voltage,Current_abs,"g-",Voltage_2,Current_abs_2,'c>')
+        plt.plot(Voltage,Current_abs,"g-",label='%s'%filename_1)
+        plt.plot(Voltage_2,Current_abs_2,'c>')
         plt.yscale('log')
         plt.title('I-V graph_abs')
         plt.xlabel('Voltage [V]',labelpad=10)
         plt.ylabel('Current [A]',labelpad=10)
+        plt.legend()
         plt.grid(True)
 
         if A == 'T':
-            plt.savefig('.\\res\\%s.png'%filename)
+            plt.savefig('.\\res\\%s.png'%filename_1)
         
         if B == 'T':
             plt.show(block=False)
